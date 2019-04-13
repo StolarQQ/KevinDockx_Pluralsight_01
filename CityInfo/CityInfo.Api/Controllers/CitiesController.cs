@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
+using CityInfo.Api;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -9,7 +11,7 @@ namespace CityInfo.Api.Controllers
     public class CitiesController : Controller
     {
         [HttpGet]
-        public IActionResult GetCities()
+        public async Task<IActionResult> GetCities()
         {
             return Ok(CitiesDataStore.Current.Cities);
         }
