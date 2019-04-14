@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using CityInfo.Api;
+using CityInfo.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -26,5 +28,17 @@ namespace CityInfo.Api.Controllers
             }
             return Ok(cityToReturn);
         }
+
+        //[HttpPost]
+        //public void PostCity([FromBody] CityDto city)
+        //{
+        //    var cityExist = CitiesDataStore.Current.Cities.FirstOrDefault(x => x.Id == city.Id);
+        //    if (cityExist != null)
+        //    {
+        //        throw new Exception($"City with '{city.Id}' already exist");
+        //    }
+
+        //    CitiesDataStore.Current.Cities.Add(cityExist);
+        //}
     }
 }
