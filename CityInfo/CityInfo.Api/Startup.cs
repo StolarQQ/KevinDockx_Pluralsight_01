@@ -19,9 +19,14 @@ namespace CityInfo.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // Add 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddMvcOptions(x => x.OutputFormatters.Add(
                     new XmlDataContractSerializerOutputFormatter()));
+
+            // Option for name strategy for json response, we will get data in the same LatterCase as our model. 
+
             //   .AddJsonOptions(o =>
             //{
             //    if (o.SerializerSettings.ContractResolver != null)
@@ -49,6 +54,7 @@ namespace CityInfo.Api
             app.UseStatusCodePages();
             app.UseMvc();
 
+            
 
             //app.Run(async (context) =>
             //{
