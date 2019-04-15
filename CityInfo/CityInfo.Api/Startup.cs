@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CityInfo.Api.Services;
+﻿using CityInfo.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Serialization;
 
 namespace CityInfo.Api
 {
@@ -32,14 +25,15 @@ namespace CityInfo.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddMvcOptions(x => x.OutputFormatters.Add(
                     new XmlDataContractSerializerOutputFormatter()));
-
+            
 #if DEBUG
             services.AddTransient<IMailService, LocalMailService>();
+
 #else
             services.AddTransient<IMailService, CloudMailService>();
 #endif
 
-            
+
 
             // Option for name strategy for json response, we will get data in the same LatterCase as our model. 
 
@@ -69,8 +63,7 @@ namespace CityInfo.Api
 
             app.UseStatusCodePages();
             app.UseMvc();
-
-            
+         
 
             //app.Run(async (context) =>
             //{

@@ -13,8 +13,8 @@ namespace CityInfo.Api.Controllers
     [Route("api/cities")]
     public class PointsOfInterestController : Controller
     {
-        private ILogger<PointsOfInterestController> _logger;
-        private IMailService _mailService;
+        private readonly ILogger<PointsOfInterestController> _logger;
+        private readonly IMailService _mailService;
 
         public PointsOfInterestController(ILogger<PointsOfInterestController> logger, IMailService mailService)
         {
@@ -30,6 +30,7 @@ namespace CityInfo.Api.Controllers
                 var city = CitiesDataStore.Current.Cities.FirstOrDefault(x => x.Id == cityid);
                 if (city == null)
                 {
+                    _logger.LogDebug("Testing logger");
                     _logger.LogInformation($"City with id '{cityid}' was not found");
                     return NotFound();
                 }
