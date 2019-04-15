@@ -17,7 +17,6 @@ namespace CityInfo.Api
             {
                 logger.Debug("init main");
                 CreateWebHostBuilder(args).Build().Run();
-
             }
             catch (Exception ex)
             {
@@ -41,7 +40,6 @@ namespace CityInfo.Api
                     config.SetBasePath(env.ContentRootPath);
                     config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
                     config.AddJsonFile($"appSettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
-                    
                 })
                 .UseStartup<Startup>()
                 .ConfigureLogging(logging =>

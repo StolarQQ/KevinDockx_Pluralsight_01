@@ -1,8 +1,10 @@
-﻿using CityInfo.Api.Services;
+﻿using CityInfo.Api.Entities;
+using CityInfo.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,16 +27,19 @@ namespace CityInfo.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddMvcOptions(x => x.OutputFormatters.Add(
                     new XmlDataContractSerializerOutputFormatter()));
-            
+
+            services.AddDbContext<CityInfoContext>(options =>
+                   options.UseSqlServer(Configuration["ConnectionString:CityDb"]));
+
+            services.AddScoped<ICityInfoRepository, CityInfoRepository>();
+
 #if DEBUG
             services.AddTransient<IMailService, LocalMailService>();
 
 #else
             services.AddTransient<IMailService, CloudMailService>();
 #endif
-
-
-
+            
             // Option for name strategy for json response, we will get data in the same LatterCase as our model. 
 
             //   .AddJsonOptions(o =>
@@ -49,27 +54,27 @@ namespace CityInfo.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, CityInfoContext cityInfoContext)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                
             }
             else
             {
-               // app.UseExceptionHandler();
+                // app.UseExceptionHandler();
             }
+
+            cityInfoContext.EnsureSeedDataForContext();
 
             app.UseStatusCodePages();
             app.UseMvc();
-         
 
             //app.Run(async (context) =>
             //{
             //    await context.Response.WriteAsync("Hello World!");
             //});
-
         }
     }
 }
