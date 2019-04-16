@@ -7,7 +7,7 @@ namespace CityInfo.Api.Services
 {
     public class CityInfoRepository : ICityInfoRepository
     {
-        private CityInfoContext _context;
+        private readonly CityInfoContext _context;
 
         public CityInfoRepository(CityInfoContext context)
         {
@@ -22,7 +22,7 @@ namespace CityInfo.Api.Services
 
         public bool CityExists(int cityId)
         {
-            return _context.Cities.Any(c => c.Id == cityId);
+            return _context.Cities.Any(x => x.Id == cityId);
         }
 
         public IEnumerable<City> GetCities()
@@ -43,13 +43,12 @@ namespace CityInfo.Api.Services
 
         public PointOfInterest GetPointOfInterestForCity(int cityId, int pointOfInterestId)
         {
-            return _context.PointsOfInterest.FirstOrDefault(p => p.CityId == cityId && p.Id == pointOfInterestId);
+            return _context.PointsOfInterest.FirstOrDefault(p => p.City.Id == cityId && p.Id == pointOfInterestId);
         }
 
         public IEnumerable<PointOfInterest> GetPointsOfInterestForCity(int cityId)
         {
-            return _context.PointsOfInterest
-                .Where(p => p.CityId == cityId).ToList();
+            return _context.PointsOfInterest.Where(x => x.City.Id == cityId).ToList();
         }
 
         public void DeletePointOfInterest(PointOfInterest pointOfInterest)

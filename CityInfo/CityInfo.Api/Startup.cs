@@ -1,5 +1,6 @@
 ﻿using CityInfo.Api.Entities;
 using CityInfo.Api.Services;
+using CityInfo.Api.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -70,6 +71,18 @@ namespace CityInfo.Api
 
             app.UseStatusCodePages();
             app.UseMvc();
+
+            AutoMapper.Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<Entities.City, Models.CityWithoutPointsOfInterestDto>();
+                    cfg.CreateMap<Entities.City, Models.CityDto>();
+                    cfg.CreateMap<Entities.PointOfInterest, Models.PointOfInterestDto>();
+                    cfg.CreateMap<Models.PointOfInterestCreationDto, Entities.PointOfInterest>();
+                    cfg.CreateMap<Models.PointOfInterestUpdateDto, Entities.PointOfInterest>();
+                    cfg.CreateMap<Entities.PointOfInterest, Models.PointOfInterestUpdateDto>();
+
+
+                });
 
             //app.Run(async (context) =>
             //{

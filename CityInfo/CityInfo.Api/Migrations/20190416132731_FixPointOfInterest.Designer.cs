@@ -4,14 +4,16 @@ using CityInfo.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CityInfo.Api.Migrations
 {
     [DbContext(typeof(CityInfoContext))]
-    partial class CityInfoContextModelSnapshot : ModelSnapshot
+    [Migration("20190416132731_FixPointOfInterest")]
+    partial class FixPointOfInterest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,16 +45,16 @@ namespace CityInfo.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CityId");
-
                     b.Property<string>("Description")
                         .HasMaxLength(200);
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("{CityId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("{CityId");
 
                     b.ToTable("PointsOfInterest");
                 });
@@ -61,7 +63,7 @@ namespace CityInfo.Api.Migrations
                 {
                     b.HasOne("CityInfo.Api.Entities.City", "City")
                         .WithMany("PointsOfInterest")
-                        .HasForeignKey("CityId");
+                        .HasForeignKey("{CityId");
                 });
 #pragma warning restore 612, 618
         }
